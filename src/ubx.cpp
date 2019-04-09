@@ -78,7 +78,7 @@
 
 /**** Warning macros, disable to save memory */
 #define UBX_WARN(...)		{GPS_WARN(__VA_ARGS__);}
-#define UBX_DEBUG(...)		{/*GPS_WARN(__VA_ARGS__);*/}
+#define UBX_DEBUG(...)		{GPS_WARN(__VA_ARGS__);}
 
 GPSDriverUBX::GPSDriverUBX(Interface gpsInterface, GPSCallbackPtr callback, void *callback_user,
 			   struct vehicle_gps_position_s *gps_position,
@@ -740,7 +740,7 @@ GPSDriverUBX::receive(unsigned timeout)
 			}
 
 		} else {
-			//UBX_DEBUG("read %d bytes", ret);
+            //UBX_DEBUG("read %d bytes", ret);
 
 			/* pass received bytes to the packet decoder */
 			for (int i = 0; i < ret; i++) {
@@ -904,7 +904,7 @@ GPSDriverUBX::parseChar(const uint8_t b)
 
 	case UBX_DECODE_RTCM3:
 		if (_rtcm_parsing->addByte(b)) {
-			UBX_DEBUG("got RTCM message with length %i", (int)_rtcm_parsing->messageLength());
+            //UBX_DEBUG("got RTCM message with length %i", (int)_rtcm_parsing->messageLength());
 			gotRTCMMessage(_rtcm_parsing->message(), _rtcm_parsing->messageLength());
 			decodeInit();
 		}
@@ -1558,8 +1558,8 @@ GPSDriverUBX::payloadRxDone()
 		{
 			ubx_payload_rx_nav_svin_t &svin = _buf.payload_rx_nav_svin;
 
-			UBX_DEBUG("Survey-in status: %is cur accuracy: %imm nr obs: %i valid: %i active: %i",
-				  svin.dur, svin.meanAcc / 10, svin.obs, (int)svin.valid, (int)svin.active);
+//			UBX_DEBUG("Survey-in status: %is cur accuracy: %imm nr obs: %i valid: %i active: %i",
+//				  svin.dur, svin.meanAcc / 10, svin.obs, (int)svin.valid, (int)svin.active);
 
 			SurveyInStatus status;
 			double ecef_x = ((double)svin.meanX + (double)svin.meanXHP * 0.01) * 0.01;

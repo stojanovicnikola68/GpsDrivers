@@ -56,6 +56,12 @@
 #define UBX_SYNC1 0xB5
 #define UBX_SYNC2 0x62
 
+/* **************************** JUST FOR INIT ******************* */
+/* TX CFG-TMODE3 message contents */
+#define UBX_TX_CFG_TMODE3_FLAGS     	1 	    	/**< start survey-in */
+#define UBX_TX_CFG_TMODE3_SVINMINDUR    (3*60)		/**< survey-in: minimum duration [s] (higher=higher precision) */
+#define UBX_TX_CFG_TMODE3_SVINACCLIMIT  (10000)	/**< survey-in: position accuracy limit 0.1[mm] */
+
 /* Message Classes */
 #define UBX_CLASS_NAV		0x01
 #define UBX_CLASS_INF		0x04

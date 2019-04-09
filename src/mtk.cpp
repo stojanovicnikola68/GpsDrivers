@@ -35,7 +35,7 @@
  * @file mtk.cpp
  *
  * @author Thomas Gubler <thomasgubler@student.ethz.ch>
- * @author Julian Oes <julian@oes.ch>
+ * @author Julian Oes <joes@student.ethz.ch>
  */
 
 #include "mtk.h"
@@ -44,7 +44,7 @@
 #include <math.h>
 #include <string.h>
 #include <ctime>
-#include <cmath>
+
 
 
 GPSDriverMTK::GPSDriverMTK(GPSCallbackPtr callback, void *callback_user, struct vehicle_gps_position_s *gps_position) :
@@ -62,10 +62,6 @@ GPSDriverMTK::configure(unsigned &baudrate, OutputMode output_mode)
 		return -1;
 	}
 
-	if (baudrate > 0 && baudrate != MTK_BAUDRATE) {
-		return -1;
-	}
-
 	/* set baudrate first */
 	if (GPSHelper::setBaudrate(MTK_BAUDRATE) != 0) {
 		return -1;
@@ -78,25 +74,25 @@ GPSDriverMTK::configure(unsigned &baudrate, OutputMode output_mode)
 		goto errout;
 	}
 
-	gps_usleep(10000);
+	usleep(10000);
 
 	if (strlen(MTK_SET_BINARY) != write(MTK_SET_BINARY, strlen(MTK_SET_BINARY))) {
 		goto errout;
 	}
 
-	gps_usleep(10000);
+	usleep(10000);
 
 	if (strlen(MTK_SBAS_ON) != write(MTK_SBAS_ON, strlen(MTK_SBAS_ON))) {
 		goto errout;
 	}
 
-	gps_usleep(10000);
+	usleep(10000);
 
 	if (strlen(MTK_WAAS_ON) != write(MTK_WAAS_ON, strlen(MTK_WAAS_ON))) {
 		goto errout;
 	}
 
-	gps_usleep(10000);
+	usleep(10000);
 
 	if (strlen(MTK_NAVTHRES_OFF) != write(MTK_NAVTHRES_OFF, strlen(MTK_NAVTHRES_OFF))) {
 		goto errout;
@@ -142,7 +138,7 @@ GPSDriverMTK::receive(unsigned timeout)
 			}
 
 		} else {
-			gps_usleep(20000);
+			usleep(20000);
 		}
 
 		/* in case we keep trying but only get crap from GPS */
